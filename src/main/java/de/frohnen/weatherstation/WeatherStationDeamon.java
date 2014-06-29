@@ -13,27 +13,34 @@ import java.io.InputStreamReader;
  */
 public class WeatherStationDeamon {
 
-    public static void main(String[] args0) {
+    public static void main(String[] args0) throws Exception{
         Runtime rt = Runtime.getRuntime();
         BufferedReader br;
         Writer csv = new CSVWriter("results.csv");
-        Writer db = new MySQLWriter();
+        Writer sql = new SQLWriter("inserts.sql");
+        //Writer db = new MySQLWriter();
         do {
             try {
-                Process pr = rt.exec("./loldht.bat 7");
+                Process pr = rt.exec("sudo ./loldht 7");
                 pr.waitFor();
                 br = new BufferedReader(new InputStreamReader(pr.getInputStream()));
                 String line;
+                boolean test = true;
                 while ((line = br.readLine()) != null) {
                     if (StringUtils.startsWithIgnoreCase(line, "Humidity")) {
+                        test = false;
                         String hum = line.substring(StringUtils.indexOf(line, "=") + 2, StringUtils.indexOf(line, "=") + 7);
                         line = line.substring(StringUtils.indexOf(line, "=") + 2);
                         String tem = line.substring(StringUtils.indexOf(line, "=") + 2, StringUtils.indexOf(line, "=") + 7);
                         SensorReading sr = new SensorReading(Double.valueOf(tem), Double.valueOf(hum));
                         csv.writeList(sr);
-                        db.writeList(sr);
+                        sql.writeList(sr);
+                        //db.writeList(sr);
                         break;
                     }
+                }
+                if(test){
+                    throw new Exception("Befehl läuft nicht!");
                 }
                 br.close();
                 pr.destroy();
