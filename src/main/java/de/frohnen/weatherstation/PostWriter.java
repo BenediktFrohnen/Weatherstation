@@ -19,13 +19,21 @@ import java.util.List;
  * Created by blaukool on 29/07/2014.
  */
 public class PostWriter implements Writer {
+
+    private String url;
+
+    public PostWriter(String url) {
+        super();
+        this.url = url;
+    }
+
     @Override
     public void writeList(SensorReading values){
 
         CloseableHttpClient httpClient = HttpClients.createDefault();
 
         try {
-            HttpPost request = new HttpPost("http://yoururl");
+            HttpPost request = new HttpPost(url);
             request.addHeader("content-type", "application/x-www-form-urlencoded");
             List<NameValuePair> nvps = new ArrayList<NameValuePair>();
             nvps.add(new BasicNameValuePair("time", values.getTime().toString()));

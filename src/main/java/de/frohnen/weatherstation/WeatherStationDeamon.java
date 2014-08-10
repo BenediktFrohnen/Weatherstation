@@ -17,8 +17,7 @@ public class WeatherStationDeamon {
         Runtime rt = Runtime.getRuntime();
         BufferedReader br;
         Writer csv = new CSVWriter("results.csv");
-        Writer sql = new SQLWriter("inserts.sql");
-        //Writer db = new MySQLWriter();
+        Writer post = new PostWriter("url");
         do {
             try {
                 Process pr = rt.exec("sudo ./loldht 7");
@@ -34,8 +33,7 @@ public class WeatherStationDeamon {
                         String tem = line.substring(StringUtils.indexOf(line, "=") + 2, StringUtils.indexOf(line, "=") + 7);
                         SensorReading sr = new SensorReading(Double.valueOf(tem), Double.valueOf(hum));
                         csv.writeList(sr);
-                        sql.writeList(sr);
-                        //db.writeList(sr);
+                        post.writeList(sr);
                         break;
                     }
                 }
@@ -59,5 +57,4 @@ public class WeatherStationDeamon {
             }
         } while (true);
     }
-
 }
