@@ -17,7 +17,7 @@ public class WeatherStationDeamon {
         Runtime rt = Runtime.getRuntime();
         BufferedReader br;
         Writer csv = new CSVWriter("results.csv");
-        Writer post = new PostWriter("url");
+        Writer post = new PostWriter("http://www.adresse.net/temperatur.php");
         do {
             try {
                 Process pr = rt.exec("sudo ./loldht 7");
