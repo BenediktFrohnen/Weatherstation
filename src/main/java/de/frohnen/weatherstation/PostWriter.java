@@ -12,6 +12,7 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,12 +32,12 @@ public class PostWriter implements Writer {
     public void writeList(SensorReading values){
 
         CloseableHttpClient httpClient = HttpClients.createDefault();
-
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         try {
             HttpPost request = new HttpPost(url);
             request.addHeader("content-type", "application/x-www-form-urlencoded");
             List<NameValuePair> nvps = new ArrayList<NameValuePair>();
-            nvps.add(new BasicNameValuePair("time", values.getTime().toString()));
+            nvps.add(new BasicNameValuePair("time", sdf.format(values.getTime())));
             nvps.add(new BasicNameValuePair("temperatur", values.getTemperature().toString()));
             nvps.add(new BasicNameValuePair("humidity", values.getHumidity().toString()));
 
