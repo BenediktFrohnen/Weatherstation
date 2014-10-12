@@ -9,18 +9,24 @@ import java.util.Date;
  * <p/>
  * Created by Benedikt Frohnen on 21.06.2014.
  */
-public class SensorReading {
+public class SensorReading { // Interne Beschreiung
 
     private Date time;
     private Double temperature;
     private Double humidity;
 
+    /**
+     *
+     * Öffentliche Beschreibung
+     * Zuweisen der Werte und speichern in den variablen
+     */
     public SensorReading(Double temperature, Double humidity) {
         this.time = new Date();
         this.temperature = temperature;
         this.humidity = humidity;
     }
 
+    // Bei Anfrage von einer anderen class werden die in den Lokalen Variablen hinterlegten werde raus gegeben
     public Date getTime() {
         return time;
     }
@@ -34,7 +40,7 @@ public class SensorReading {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(Object o) { // Java Methode zum verarbeiten von Werten wird in meinem Fall nicht benötigt
         if (this == o) return true;
         if (!(o instanceof SensorReading)) return false;
 
@@ -45,7 +51,7 @@ public class SensorReading {
     }
 
     @Override
-    public int hashCode() {
+    public int hashCode() { // Java Methode zum verarbeiten der werte zum Beispiel zum Schreiben einer Liste
         int result = time.hashCode();
         result = 31 * result + temperature.hashCode();
         result = 31 * result + humidity.hashCode();
@@ -53,7 +59,7 @@ public class SensorReading {
     }
 
     @Override
-    public String toString() {
+    public String toString() { // Erstellen des Stringformat wenn dieses von außen angefragt wird
         return new ToStringBuilder(this)
                 .append("time", time)
                 .append("temperature", temperature)

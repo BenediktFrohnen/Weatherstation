@@ -15,9 +15,9 @@ public class CSVWriter implements Writer {
 
     public CSVWriter(String filename) {
         try {
-            writer = new FileWriter(new File(filename),true);
+            writer = new FileWriter(new File(filename),true); // Erstellen der Datei wenn noch keine besteht
             writer.flush();
-        } catch (IOException e) {
+        } catch (IOException e) { // Fehlererkennung
             e.printStackTrace();
             System.exit(-1);
         }
@@ -25,17 +25,17 @@ public class CSVWriter implements Writer {
 
     @Override
     public void writeList(SensorReading values) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(values.getTime());
-        sb.append(",");
-        sb.append(values.getTemperature());
-        sb.append(",");
-        sb.append(values.getHumidity());
-        sb.append("\n");
+        StringBuilder sb = new StringBuilder(); // Erstellen eines Strings für die CSV Datei
+        sb.append(values.getTime()); // Einlesen des Datum
+        sb.append(","); // Einfügen des Komma
+        sb.append(values.getTemperature()); // Einlesen der Temperatur
+        sb.append(","); // Einfügen des Komma
+        sb.append(values.getHumidity()); // Einfügen der Luftfeuchtigkeit
+        sb.append("\n"); // In die nächste Zeile springen
         try {
-            writer.write(sb.toString());
+            writer.write(sb.toString()); // String in die CSV schreiben
             writer.flush();
-        } catch (IOException e) {
+        } catch (IOException e) { // Fehlererkennung
             e.printStackTrace();
             System.exit(-1);
         }

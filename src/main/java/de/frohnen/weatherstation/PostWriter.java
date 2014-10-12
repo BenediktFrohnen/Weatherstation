@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by blaukool on 29/07/2014.
+ * Created by Benedikt Frohnen on 29/07/2014.
  */
 public class PostWriter implements Writer {
 
@@ -30,25 +30,24 @@ public class PostWriter implements Writer {
 
     @Override
     public void writeList(SensorReading values){
-
-        CloseableHttpClient httpClient = HttpClients.createDefault();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        CloseableHttpClient httpClient = HttpClients.createDefault(); //Beschreiung des HTTP Client
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //Datumsformat bestimmen
         try {
-            HttpPost request = new HttpPost(url);
-            request.addHeader("content-type", "application/x-www-form-urlencoded");
-            List<NameValuePair> nvps = new ArrayList<NameValuePair>();
-            nvps.add(new BasicNameValuePair("time", sdf.format(values.getTime())));
-            nvps.add(new BasicNameValuePair("temperatur", values.getTemperature().toString()));
-            nvps.add(new BasicNameValuePair("humidity", values.getHumidity().toString()));
+            HttpPost request = new HttpPost(url); // Einlesen der URL
+            request.addHeader("content-type", "application/x-www-form-urlencoded"); //Vorbereitung der URL
+            List<NameValuePair> nvps = new ArrayList<NameValuePair>(); // Vorbereitung der Werte
+            nvps.add(new BasicNameValuePair("time", sdf.format(values.getTime()))); // Vorbereitung des Datums
+            nvps.add(new BasicNameValuePair("temperatur", values.getTemperature().toString())); //Vorbereitung der Temp.
+            nvps.add(new BasicNameValuePair("humidity", values.getHumidity().toString())); // Vorbereitung der Luftfeuchtigkeit
 
-            request.setEntity(new UrlEncodedFormEntity(nvps, Consts.UTF_8));
-            HttpResponse response = httpClient.execute(request);
-        }catch (Exception ex) {
+            request.setEntity(new UrlEncodedFormEntity(nvps, Consts.UTF_8)); // Werte zusammensetzten zum verschicken
+            HttpResponse response = httpClient.execute(request); // Aufbau der Verbindung und Übertragung
+        }catch (Exception ex) { // Fehlerauswertung
             ex.printStackTrace();
         } finally {
             try {
-                httpClient.close();
-            } catch (IOException e) {
+                httpClient.close(); // Schliesen der Verbindung
+            } catch (IOException e) { //Fehlerauswertung
                 e.printStackTrace();
             }
         }

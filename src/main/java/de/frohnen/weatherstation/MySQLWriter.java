@@ -11,7 +11,7 @@ public class MySQLWriter implements Writer {
 
     public static final String URL = "jdbc:mysql://benediktfrohnen.bplaced.net:3306/benediktfrohnen";
     public static final String USER = "benediktfrohnen";
-    public static final String PASSWORD = "";
+    public static final String PASSWORD = "*******";
     private static String SQL = "INSERT INTO weather (time,temperature,humidity) VALUES (?,?,?)";
     private Connection con;
     private PreparedStatement st;
